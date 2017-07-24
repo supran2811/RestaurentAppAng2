@@ -1,17 +1,25 @@
 
-<app-header-component></app-header-component>
+<app-header-component 
+                 (featureSelected) = "navigateTo($event)"
+                  ></app-header-component>
 <div class="container">
   <div class="row">
   
     <div class = "col-md-12">
       
-      <div class = "col-md-5">
-            <app-recipe-list></app-recipe-list>
+      <div *ngIf = "loadedFeature === 'recipe'">
+        <div class = "col-md-5">
+              <app-recipe-list (showDetailedRecipe) = "setRecipe($event)"></app-recipe-list>
+        </div>
+        <div class = "col-md-7">
+              <app-recipe-details *ngIf = "recipe else infoText" [recipe] = "recipe"></app-recipe-details>
+              <ng-template #infoText>
+                <p>Please select recipe</p>
+              </ng-template>
+        </div>
       </div>
-      <div class = "col-md-7">
-            <app-recipe-details></app-recipe-details>
-      </div>
-      <div class="col-md-12">
+
+      <div class="col-md-12" *ngIf = "loadedFeature !== 'recipe'">
         <app-shopping-list></app-shopping-list>
       </div>
       
