@@ -8,15 +8,7 @@
     <div class = "col-md-12">
       
       <div *ngIf = "loadedFeature === 'recipe'">
-        <div class = "col-md-5">
-              <app-recipe-list (showDetailedRecipe) = "setRecipe($event)"></app-recipe-list>
-        </div>
-        <div class = "col-md-7">
-              <app-recipe-details *ngIf = "recipe else infoText" [recipe] = "recipe"></app-recipe-details>
-              <ng-template #infoText>
-                <p>Please select recipe</p>
-              </ng-template>
-        </div>
+         <app-recipe></app-recipe>
       </div>
 
       <div class="col-md-12" *ngIf = "loadedFeature !== 'recipe'">

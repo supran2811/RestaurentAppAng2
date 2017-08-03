@@ -1,27 +1,22 @@
-import { Component } from '@angular/core';
-import { Recipe } from "./model/recipe.model";
+import { Component , OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+ 
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   
   loadedFeature = "recipe";
   
-  recipe:Recipe;
-
-
-  constructor(){
-    
-  }
-   
    navigateTo(feature:string){
      this.loadedFeature = feature;
    }
-   
-   setRecipe(recipe:Recipe){
-     this.recipe = recipe;
-   }
+  
+    ngOnInit(){
+      
+    }
+
 }
