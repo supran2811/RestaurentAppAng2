@@ -1,19 +1,11 @@
 
-<app-header-component 
-                 (featureSelected) = "navigateTo($event)"
-                  ></app-header-component>
+<app-header-component></app-header-component>
 <div class="container">
   <div class="row">
   
     <div class = "col-md-12">
       
-      <div *ngIf = "loadedFeature === 'recipe'">
-         <app-recipe></app-recipe>
-      </div>
-
-      <div class="col-md-12" *ngIf = "loadedFeature !== 'recipe'">
-        <app-shopping-list></app-shopping-list>
-      </div>
+      <router-outlet></router-outlet>
       
     </div>
   </div>
