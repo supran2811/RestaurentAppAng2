@@ -12,9 +12,14 @@ export class ShoppingListService {
   ];
   
   ingredientsAddedEmitter = new Subject<Ingredient[]>();
+  ingredientSelectedEmitter = new Subject<number>();
 
   getIngredients(){
     return this.ingredients.slice();
+  }
+
+  getIngredient(index:number){
+    return this.ingredients[index];
   }
 
  addIngredient(newIngredient:Ingredient){
@@ -26,4 +31,14 @@ export class ShoppingListService {
     this.ingredients.push(...newIngredients);
     this.ingredientsAddedEmitter.next(this.ingredients.slice());
   }
+
+  updateIngredient(ingredientToUpdate : Ingredient , index:number){
+      this.ingredients[index] = ingredientToUpdate;
+      this.ingredientsAddedEmitter.next(this.ingredients.slice());
+  }
+
+   removeIngredient(index:number){
+     this.ingredients.splice(index,1);
+     this.ingredientsAddedEmitter.next(this.ingredients.slice());
+   }
 }
