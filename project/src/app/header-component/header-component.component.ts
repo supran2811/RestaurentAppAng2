@@ -1,3 +1,4 @@
+import { AuthService } from '../services/auth-service.service';
 import { Router } from '@angular/router';
 import { RecipeListService } from './../services/recipe-list.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
@@ -13,7 +14,8 @@ export class HeaderComponentComponent implements OnInit {
   
 
   constructor(private recipeListService:RecipeListService , 
-                  private router:Router) { }
+                  private router:Router,
+                   private authServce:AuthService) { }
 
   ngOnInit() {
   }
@@ -27,6 +29,15 @@ export class HeaderComponentComponent implements OnInit {
     this.router.navigate(["recipes"]);
   }
 
+  logOut(){
+    this.authServce.signOut().then(
+      () => this.router.navigate(['signIn'])
+    )
+    .catch(
+      error => console.log(error)
+    );
+    
+  }
   // onSelect(feature:string){
   //    this.featureSelected.emit(feature);
   // }

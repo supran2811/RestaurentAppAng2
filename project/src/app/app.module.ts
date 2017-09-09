@@ -1,3 +1,6 @@
+import { AuthGuardDeactivate } from './services/auth-guard-deactivate.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { AuthService } from './services/auth-service.service';
 import { HttpService } from './services/http-service.service';
 import { RecipeListService } from './services/recipe-list.service';
 import { AppRouterModule } from './modules/app-router.module';
@@ -18,6 +21,8 @@ import {ShoppingListService} from './services/shoppint-list.service';
 import { RecipeComponent } from './recipe/recipe.component';
 import { NoRecipeSelectedComponent } from './recipe/no-recipe-selected/no-recipe-selected.component';
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
+import { SignupFormComponent } from './auth/signup-form/signup-form.component';
+import { SigninFormComponent } from './auth/signin-form/signin-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +35,9 @@ import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component'
     DropDownDirective,
     RecipeComponent,
     NoRecipeSelectedComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    SignupFormComponent,
+    SigninFormComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +46,7 @@ import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component'
     AppRouterModule,
     ReactiveFormsModule
   ],
-  providers :[ShoppingListService,RecipeListService , HttpService],
+  providers :[ShoppingListService,RecipeListService , HttpService , AuthService ,AuthGuard,AuthGuardDeactivate],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

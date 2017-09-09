@@ -1,3 +1,7 @@
+import { AuthGuardDeactivate } from '../services/auth-guard-deactivate.service';
+import { AuthGuard } from './../services/auth-guard.service';
+import { SigninFormComponent } from './../auth/signin-form/signin-form.component';
+import { SignupFormComponent } from './../auth/signup-form/signup-form.component';
 import { RecipeEditComponent } from './../recipe/recipe-edit/recipe-edit.component';
 import { NoRecipeSelectedComponent } from '../recipe/no-recipe-selected/no-recipe-selected.component';
 import { RecipeDetailsComponent } from '../recipe/recipe-details/recipe-details.component';
@@ -14,14 +18,21 @@ const appRouter:Routes = [
     },
     {
         path:'recipes' , component:RecipeComponent  , children :[
-            {path:'new' , component:RecipeEditComponent},
-            {path: ':id/edit' , component:RecipeEditComponent},
+            {path:'new' , component:RecipeEditComponent , canActivate :[AuthGuard],canDeactivate:[AuthGuardDeactivate]},
+            {path: ':id/edit' , component:RecipeEditComponent,canActivate :[AuthGuard]
+                                                    ,canDeactivate:[AuthGuardDeactivate]},
             {path:':id' , component:RecipeDetailsComponent},
             {path:'' , component:NoRecipeSelectedComponent}
         ]
     },
     {
         path:'shopping-list' , component:ShoppingListComponent
+    },
+    {
+        path:'signUp' , component:SignupFormComponent
+    },
+    {
+        path:'signIn' , component:SigninFormComponent
     }
 ]
 

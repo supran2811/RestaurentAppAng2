@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs/Rx';
+import { CanComponentDeactivate } from './../../services/auth-guard-deactivate.service';
 import { Recipe } from './../../model/recipe.model';
 import { RecipeListService } from '../../services/recipe-list.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params , Router} from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,11 +11,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.css']
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit ,CanComponentDeactivate{
 
   id:number;
   editMode = false;
   recipeForm : FormGroup;
+  changesSaved = false;
 
   constructor(private route:ActivatedRoute 
                   , private recipeListService : RecipeListService
@@ -71,7 +74,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmitForm(){
-
+    this.changesSaved = true;
     let newRecipe = new Recipe(this.recipeForm.value.name 
                                 , this.recipeForm.value.description 
                                 ,  this.recipeForm.value.imageUrl
@@ -93,4 +96,27 @@ export class RecipeEditComponent implements OnInit {
   removeIngredient(index:number){
     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
   }
+
+  canDeactivate() : Observable<boolean> | Promise<boolean> | boolean{
+    const recipe = this.recipeListService.getRecipe(this.id);
+
+    if(this.changesSaved == false){
+    if(recipe != null){
+         
+        if(recipe.name != this.recipeForm.value.name ||
+                recipe.description != this.recipeForm.value.description ||
+                   recipe.imagePath != this.recipeForm.value.imageUrl){
+                    return confirm("Do you want to save your changes?");
+                   }
+    }
+     else{
+        if(this.recipeForm.valid){
+          return confirm("Do you want to save your changes?");
+        }
+     }
+    }
+
+     return true;
+  }
+
 }
