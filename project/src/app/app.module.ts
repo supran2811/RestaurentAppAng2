@@ -1,3 +1,4 @@
+import { HttpService } from './services/http-service.service';
 import { RecipeListService } from './services/recipe-list.service';
 import { AppRouterModule } from './modules/app-router.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -38,7 +39,7 @@ import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component'
     AppRouterModule,
     ReactiveFormsModule
   ],
-  providers :[ShoppingListService,RecipeListService],
+  providers :[ShoppingListService,RecipeListService , HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

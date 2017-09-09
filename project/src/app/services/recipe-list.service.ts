@@ -1,14 +1,22 @@
+import { Recipe } from './../model/recipe.model';
+
+import { Response } from '@angular/http';
+import { HttpService } from './http-service.service';
 import { Subject } from 'rxjs/Subject';
 import { Subscriber } from 'rxjs/Rx';
 import {Injectable } from '@angular/core';
 
 import {Ingredient} from '../model/ingredient.model';
 
-import { Recipe } from '../model/recipe.model';
+
 import {ShoppingListService} from '../services/shoppint-list.service';
+import "rxjs/Rx";
 
 @Injectable()
 export class RecipeListService {
+    
+    
+
     private recipes : Recipe[] = [
      new Recipe("Chicken Curry" , 
                "Spicey chicken curry" , 
@@ -30,8 +38,11 @@ export class RecipeListService {
   ];
   
   recipeListUpdated = new Subject<Recipe[]>();
+   
+   URL = "https://my-recipe-book-b5271.firebaseio.com/recipe.json";
 
-  constructor(private shoppingList : ShoppingListService ){}
+  constructor(private shoppingList : ShoppingListService,
+                private httpService : HttpService ){}
 
 
    getRecipes(){
@@ -62,4 +73,30 @@ export class RecipeListService {
      this.recipeListUpdated.next(this.getRecipes());
    }
   
+   save(){
+     this.httpService.save(this.URL , this.recipes).subscribe(
+        (response:Response) => {console.log(response)},
+        (error:Response) => {console.log(error)}
+     )
+   }
+
+   sync(){
+     this.httpService.get(this.URL).map(
+           (recipes : Recipe[]) => {
+                   for(let recipe of recipes){
+
+                      if( !recipe.ingredients ){
+                         recipe.ingredients = [];
+                      }
+                   }  
+                   return recipes;
+           }
+     ).subscribe(
+       (recipes:Recipe[]) => {
+         console.log(recipes);
+          this.recipes = recipes;
+          this.recipeListUpdated.next(this.getRecipes());
+        }
+     )
+   }
 }
