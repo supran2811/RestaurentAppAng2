@@ -1,6 +1,6 @@
-import { AuthService } from '../services/auth-service.service';
+import { AuthService } from '../../services/auth-service.service';
 import { Router } from '@angular/router';
-import { RecipeListService } from './../services/recipe-list.service';
+import { RecipeListService } from '../../services/recipe-list.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
