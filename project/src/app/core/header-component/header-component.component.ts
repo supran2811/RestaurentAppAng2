@@ -15,7 +15,7 @@ export class HeaderComponentComponent implements OnInit {
 
   constructor(private recipeListService:RecipeListService , 
                   private router:Router,
-                   private authServce:AuthService) { }
+                  public  authServce:AuthService) { }
 
   ngOnInit() {
   }

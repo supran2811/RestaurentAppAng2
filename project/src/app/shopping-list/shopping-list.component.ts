@@ -1,13 +1,33 @@
 import { Subscription } from 'rxjs/Subscription';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Ingredient } from '../model/ingredient.model';
 import {ShoppingListService} from '../services/shoppint-list.service';
+import { animate, Component, OnDestroy, OnInit, style, transition, trigger } from '@angular/core';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css'],
- 
+  animations:[
+    trigger('list1',[
+      
+            transition('void => *' , [
+                style({
+                     opacity:0,
+                     transform : 'translateX(-100px)',
+                     backgroundColor:'green'
+                }),
+                animate(500)
+            ]),
+    
+            transition('* => void' , [
+              animate(500 , style({
+                  opacity  : 0,
+                  transform : 'translateX(100px)',
+                  backgroundColor : 'red'
+              }))
+          ])
+        ])
+  ]
 })
 export class ShoppingListComponent implements OnInit,OnDestroy {
   

@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 
@@ -17,6 +18,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpModule,
     ShoppingListModule,
     AuthModule,

@@ -18,6 +18,8 @@ export class RecipeEditComponent implements OnInit ,CanComponentDeactivate{
   recipeForm : FormGroup;
   changesSaved = false;
 
+  ingredientList:FormArray;
+
   constructor(private route:ActivatedRoute 
                   , private recipeListService : RecipeListService
                   , private router:Router) {
@@ -42,13 +44,13 @@ export class RecipeEditComponent implements OnInit ,CanComponentDeactivate{
     let name = "";
     let imageUrl = "";
     let description = "";
-    let ingredientList = new FormArray([]);
+    this.ingredientList = new FormArray([])
     if(recipe != null){
          name = recipe.name;
          imageUrl = recipe.imagePath;
          description = recipe.description;
          for(let i=0;i<recipe.ingredients.length;i++){
-          ingredientList.push( new FormGroup({
+          this.ingredientList.push( new FormGroup({
                      name : new FormControl(recipe.ingredients[i].name ,Validators.required),
                      amount : new FormControl(recipe.ingredients[i].amount,
                              [Validators.required ,Validators.pattern(/[1-9]+[0-9]*$/)])
@@ -60,9 +62,11 @@ export class RecipeEditComponent implements OnInit ,CanComponentDeactivate{
           name : new FormControl(name , Validators.required),
           imageUrl : new FormControl(imageUrl,Validators.required),
           description : new FormControl(description,Validators.required),
-          ingredients: ingredientList
+          ingredients: this.ingredientList
     });
   }
+  
+ 
 
   onAddIngredient(){
       (<FormArray>this.recipeForm.get('ingredients')).push(
